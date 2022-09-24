@@ -31,7 +31,7 @@ export const TNCCheckbox = ({
         }}
       />
       <span>
-        I agree to
+        I agree to{" "}
         <a
           href="#"
           onMouseEnter={() => {
