@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import { Options } from "../Options";
 
-test("displays image for each scoop from server", async () => {
+test("displays image for each scoop", async () => {
   render(<Options optionType="scoops" />);
 
   // This will find images according to their 'alt' text
@@ -16,21 +16,22 @@ test("displays image for each scoop from server", async () => {
   expect(altTexts).toEqual(["Chocolate scoop", "Vanilla scoop"]);
 });
 
-// test("displays image for each toppings from server", async () => {
-//   render(<Options optionType="toppings" />);
+test("displays image for each topping", async () => {
+  render(<Options optionType="toppings" />);
 
-//   // This will find images according to their 'alt' text
-//   const toppingImages: HTMLImageElement[] = await screen.findAllByRole("img", {
-//     name: /topping$/i,
-//   });
-//   // Assert on number of images
-//   expect(toppingImages).toHaveLength(3);
+  // This will find images according to their 'alt' text
+  const toppingImages: HTMLImageElement[] = await screen.findAllByRole("img", {
+    name: /topping$/i,
+  });
 
-//   // Assert on alt text content
-//   const altTexts = toppingImages.map((img) => img.alt);
-//   expect(altTexts).toEqual([
-//     "Cherries topping",
-//     "M&Ms topping",
-//     "Hot fudge topping",
-//   ]);
-// });
+  // Assert on number of images
+  expect(toppingImages).toHaveLength(3);
+
+  // Assert on alt text content
+  const altTexts = toppingImages.map((img) => img.alt);
+  expect(altTexts).toEqual([
+    "Cherries topping",
+    "M&Ms topping",
+    "Hot fudge topping",
+  ]);
+});

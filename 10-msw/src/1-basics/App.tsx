@@ -9,9 +9,9 @@ function App() {
   return (
     <div className="App">
       <h3>Choose Scoops</h3>
-      <Options optionType="" />
+      <Options optionType="scoops" />
       <h3>Choose Toppings</h3>
-      <Options optionType="" />
+      <Options optionType="toppings" />
       {/* <SummaryForm /> */}
     </div>
   );

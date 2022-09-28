@@ -4,6 +4,7 @@ import { BASE_URL } from "../../utils/api";
 import { ItemType } from "../../models/dataTypes";
 import { ScoopOption } from "./ScoopOption";
 import styled from "styled-components";
+import { ToppingOption } from "./ToppingOption";
 
 const StyledOptions = styled.ul`
   display: flex;
@@ -19,7 +20,7 @@ export const Options = ({ optionType }: Proptype) => {
 
   useEffect(() => {
     axios
-      .get(`${BASE_URL}/scoops`)
+      .get(`${BASE_URL}/${optionType}`)
       .then((res) => setItems(res.data))
       .catch((error) => {
         if (error instanceof Error) {
@@ -31,11 +32,18 @@ export const Options = ({ optionType }: Proptype) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const OptionComp =
+    optionType === "scoops"
+      ? ScoopOption
+      : optionType === "toppings"
+      ? ToppingOption
+      : null;
+
   return (
     <StyledOptions>
-      {items.map((item) => (
-        <ScoopOption key={item.name} item={item} />
-      ))}
+      {items.map(
+        (item) => OptionComp && <OptionComp key={item.name} item={item} />
+      )}
     </StyledOptions>
   );
 };

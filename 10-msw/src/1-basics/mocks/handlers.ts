@@ -22,4 +22,14 @@ export const handlers = [
       ])
     );
   }),
+
+  rest.get(`${BASE_URL}/toppings`, (req, res, ctx) =>
+    res(
+      ctx.json([
+        { name: "Cherries", imagePath: "/images/cherries.png" },
+        { name: "M&Ms", imagePath: "/images/m-and-ms.png" },
+        { name: "Hot fudge", imagePath: "/images/hot-fudge.png" },
+      ])
+    )
+  ),
 ];
