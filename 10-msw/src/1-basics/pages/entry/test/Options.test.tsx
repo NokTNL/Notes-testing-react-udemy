@@ -2,6 +2,9 @@ import { render, screen } from "@testing-library/react";
 import { Options } from "../Options";
 
 test("displays image for each scoop", async () => {
+  /**
+   * Whenever we render the component in our test, it gets data from our msw
+   */
   render(<Options optionType="scoops" />);
 
   // This will find images according to their 'alt' text

@@ -19,6 +19,7 @@ export const Options = ({ optionType }: Proptype) => {
   const [items, setItems] = useState([] as ItemType[]);
 
   useEffect(() => {
+    // This server call will be replaced by our msw when running test because of the settings in `setupTests.ts`
     axios
       .get(`${BASE_URL}/${optionType}`)
       .then((res) => setItems(res.data))
