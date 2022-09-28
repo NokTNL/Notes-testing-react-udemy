@@ -7,7 +7,7 @@ import "@testing-library/jest-dom";
 /**
  * The below is needed for jest to use our mock server intead of a real one. These code will be injected into each test file and run before our test code
  */
-import { server } from "./0-setup/mocks/server";
+import { server } from "./1-basics/mocks/server";
 
 // Establish API mocking before all tests.
 beforeAll(() => server.listen());
