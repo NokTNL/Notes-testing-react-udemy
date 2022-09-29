@@ -7,12 +7,13 @@ import "@testing-library/jest-dom";
 /**
  * The below is needed for jest to use our mock server intead of a real one. These code will be injected into each test file and run before our test code
  */
-import { server } from "./1-basics/mocks/server";
+import { server } from "./10-error-handling/mocks/server";
 
-// Establish API mocking before all tests.
+// Starts the requests interception service ONCE
 beforeAll(() => server.listen());
 
-// Reset any request handlers that we may add during the tests,
+// Reset to the handlers we defined during `setupServer()`
+// This will remove any handlers that we may add during the tests,
 // so they don't affect other tests.
 afterEach(() => server.resetHandlers());
 

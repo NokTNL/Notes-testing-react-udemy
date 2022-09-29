@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import reportWebVitals from "./reportWebVitals";
 
-import App from "./1-basics/App";
+import App from "./10-error-handling/App";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
