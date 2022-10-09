@@ -8,9 +8,17 @@ const ItemsContainer = styled.ul`
 `;
 
 export const ToppingOptions = () => {
-  const [entryState] = useEntryPageContext();
+  const [entryState, entryDispatch] = useEntryPageContext();
   const toppingOptions = entryState.options.toppings;
+  const toppingsCounts = entryState.entries.toppings;
   const hasError = entryState.options.hasError;
+
+  const handleItemCountChange = (targetName: string, newCount: number) => {
+    entryDispatch({
+      type: "CHANGE_TOPPINGS_COUNT",
+      payload: { name: targetName, count: newCount },
+    });
+  };
 
   return (
     <section>
@@ -23,15 +31,15 @@ export const ToppingOptions = () => {
       ) : (
         <>
           <p>$1.50 each</p>
-          {/* 🤯 the below shoudl change according to different types of options! */}
           <p>
             Toppings total: $
-            {/* {(
-          totalOptionCounts.reduce(
-            (total, optionCount) => total + optionCount.count,
-            0
-          ) * 2
-        ).toFixed(2)} */}
+            {(
+              Array.from(toppingsCounts).reduce(
+                (total, item) => total + item[1],
+                0
+              ) * 1.5
+            ) // $1.5 each
+              .toFixed(2)}
           </p>
           <ItemsContainer>
             {toppingOptions.map((item) => (
@@ -39,11 +47,7 @@ export const ToppingOptions = () => {
                 key={item.name}
                 item={item}
                 itemText="toppings"
-                // count={
-                //   totalOptionCounts.find((option) => option.name === item.name)
-                //     ?.count ?? 0
-                // }
-                // handleOptionCountChange={handleOptionCountChange}
+                handleItemCountChange={handleItemCountChange}
               />
             ))}
           </ItemsContainer>

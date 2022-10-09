@@ -2,37 +2,46 @@ import styled from "styled-components";
 import { EntryOptionItem } from "./types";
 import { BASE_URL } from "../../constants/api";
 
-const StyledImg = styled.img`
-  height: 100px;
-`;
-
 type PropType = {
   item: EntryOptionItem;
   itemText: string;
-  // count: number;
-  // handleOptionCountChange: (targetName: string, newCount: number) => void;
+  handleItemCountChange: (targetName: string, newCount: number) => void;
 };
 
-export const Item = ({
-  item /* count, handleOptionCountChange  */,
-  itemText,
-}: PropType) => {
+const StyledImg = styled.img`
+  height: 150px;
+  object-fit: contain;
+`;
+
+const StyledItem = styled.li`
+  display: flex;
+  flex-direction: column;
+`;
+
+export const Item = ({ item, itemText, handleItemCountChange }: PropType) => {
   return (
-    <li>
+    <StyledItem>
       <StyledImg
         src={`${BASE_URL}${item.imagePath}`}
         alt={`${item.name} ${itemText}`}
       />
-      <p>
-        {item.name}{" "}
+      <p>{item.name}</p>
+      <label>
+        <span
+          style={{ display: "none" }}
+        >{`number of ${item.name} items`}</span>
         <input
           type="number"
-          // value={count}
-          // onChange={(e) => {
-          //   handleOptionCountChange(item.name, parseInt(e.target.value));
-          // }}
+          min={0}
+          step={1}
+          defaultValue={0}
+          onChange={(e) => {
+            const newCount = parseInt(e.target.value);
+            if (isNaN(newCount) || newCount < 0) return;
+            handleItemCountChange(item.name, newCount);
+          }}
         />
-      </p>
-    </li>
+      </label>
+    </StyledItem>
   );
 };

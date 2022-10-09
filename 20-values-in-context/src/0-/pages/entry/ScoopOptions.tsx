@@ -8,19 +8,17 @@ const ItemsContainer = styled.ul`
 `;
 
 export const ScoopOptions = () => {
-  const [entryState] = useEntryPageContext();
+  const [entryState, entryDispatch] = useEntryPageContext();
   const scoopsOptions = entryState.options.scoops;
+  const scoopsCounts = entryState.entries.scoops;
   const hasError = entryState.options.hasError;
 
-  // const handleOptionCountChange = (targetName: string, newCount: number) => {
-  //   setTotalOptionCounts((prevCounts) =>
-  //     prevCounts.map((option) =>
-  //       option.name === targetName
-  //         ? { name: option.name, count: newCount }
-  //         : option
-  //     )
-  //   );
-  // };
+  const handleItemCountChange = (targetName: string, newCount: number) => {
+    entryDispatch({
+      type: "CHANGE_SCOOPS_COUNT",
+      payload: { name: targetName, count: newCount },
+    });
+  };
 
   return (
     <section>
@@ -32,27 +30,23 @@ export const ScoopOptions = () => {
       ) : (
         <>
           <p>$2.00 each</p>
-          {/* 🤯 the below shoudl change according to different types of options! */}
           <p>
             Scoops total: $
-            {/* {(
-          totalOptionCounts.reduce(
-            (total, optionCount) => total + optionCount.count,
-            0
-          ) * 2
-        ).toFixed(2)} */}
+            {(
+              Array.from(scoopsCounts).reduce(
+                (total, item) => total + item[1],
+                0
+              ) * 2
+            ) // $2 each
+              .toFixed(2)}
           </p>
           <ItemsContainer>
             {scoopsOptions.map((item) => (
               <Item
                 key={item.name}
                 item={item}
+                handleItemCountChange={handleItemCountChange}
                 itemText="scoops"
-                // count={
-                //   totalOptionCounts.find((option) => option.name === item.name)
-                //     ?.count ?? 0
-                // }
-                // handleOptionCountChange={handleOptionCountChange}
               />
             ))}
           </ItemsContainer>

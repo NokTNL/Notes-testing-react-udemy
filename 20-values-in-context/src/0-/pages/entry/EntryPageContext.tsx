@@ -6,7 +6,7 @@ import {
   useEffect,
   useReducer,
 } from "react";
-import { entryPageService } from "./entryPageService";
+import { entryPageThunk } from "./entryPageThunk";
 import { EntryOptionItem } from "./types";
 
 /* Reducer and Actions */
@@ -18,25 +18,8 @@ const INITIAL_STATE = {
     hasError: false,
   },
   entries: {
-    scoops: [
-      {
-        name: "Mint chip",
-        count: 1,
-      },
-      {
-        name: "Vanilla",
-        count: 2,
-      },
-      {
-        name: "Mint chip",
-        count: 3,
-      },
-      {
-        name: "Salted caramel",
-        count: 4,
-      },
-    ],
-    toppings: [],
+    scoops: new Map<string, number>(),
+    toppings: new Map<string, number>(),
   },
 };
 
@@ -53,12 +36,17 @@ export type EntryPageActions =
     }
   | {
       type: "OPTIONS_HAS_ERROR";
+    }
+  | {
+      type: "CHANGE_SCOOPS_COUNT";
+      payload: { name: string; count: number };
+    }
+  | {
+      type: "CHANGE_TOPPINGS_COUNT";
+      payload: { name: string; count: number };
     };
 
-const reducer = (
-  state: EntryPageState,
-  action: EntryPageActions
-): EntryPageState => {
+const reducer = (state: EntryPageState, action: EntryPageActions) => {
   switch (action.type) {
     case "LOAD_SCOOPS_OPTIONS": {
       return {
@@ -66,6 +54,10 @@ const reducer = (
         options: {
           ...state.options,
           scoops: action.payload,
+        },
+        entries: {
+          ...state.entries,
+          scoops: new Map(action.payload.map((item) => [item.name, 0])),
         },
       };
     }
@@ -87,6 +79,30 @@ const reducer = (
         },
       };
     }
+    case "CHANGE_SCOOPS_COUNT": {
+      const newMap = new Map(Array.from(state.entries.scoops));
+      newMap.set(action.payload.name, action.payload.count);
+
+      return {
+        ...state,
+        entries: {
+          ...state.entries,
+          scoops: newMap,
+        },
+      };
+    }
+    case "CHANGE_TOPPINGS_COUNT": {
+      const newMap = new Map(Array.from(state.entries.toppings));
+      newMap.set(action.payload.name, action.payload.count);
+
+      return {
+        ...state,
+        entries: {
+          ...state.entries,
+          toppings: newMap,
+        },
+      };
+    }
     default:
       throw new Error("Wrong EntryPageContext reducer action type");
   }
@@ -102,8 +118,8 @@ export const EntryPageProvider = ({ children }: PropsWithChildren) => {
   const [state, dispatch] = useReducer(reducer, INITIAL_STATE);
 
   useEffect(() => {
-    void entryPageService(dispatch, state);
-  });
+    void entryPageThunk(dispatch, state);
+  }, []);
 
   return (
     <EntryPageContext.Provider value={[state, dispatch]}>

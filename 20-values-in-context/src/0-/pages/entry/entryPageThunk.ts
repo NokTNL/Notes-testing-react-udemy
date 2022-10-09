@@ -4,7 +4,7 @@ import { BASE_URL } from "../../constants/api";
 import { EntryPageActions, EntryPageState } from "./EntryPageContext";
 import type { EntryOptionItem } from "./types";
 
-export const entryPageService = async (
+export const entryPageThunk = async (
   dispatch: Dispatch<EntryPageActions>,
   state: EntryPageState
 ) => {
@@ -28,9 +28,4 @@ export const entryPageService = async (
   } catch (err) {
     dispatch({ type: "OPTIONS_HAS_ERROR" });
   }
-
-  //   setTotalOptionCounts(
-  //     res.data.map((item) => ({ name: item.name, count: 0 }))
-  //   );
-  // })
 };
