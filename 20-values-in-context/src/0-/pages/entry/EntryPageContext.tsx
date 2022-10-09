@@ -11,18 +11,6 @@ import { EntryOptionItem } from "./types";
 
 /* Reducer and Actions */
 
-const INITIAL_STATE = {
-  options: {
-    scoops: [] as EntryOptionItem[],
-    toppings: [] as EntryOptionItem[],
-    hasError: false,
-  },
-  entries: {
-    scoops: new Map<string, number>(),
-    toppings: new Map<string, number>(),
-  },
-};
-
 export type EntryPageState = typeof INITIAL_STATE;
 
 export type EntryPageActions =
@@ -45,6 +33,18 @@ export type EntryPageActions =
       type: "CHANGE_TOPPINGS_COUNT";
       payload: { name: string; count: number };
     };
+
+const INITIAL_STATE = {
+  options: {
+    scoops: [] as EntryOptionItem[],
+    toppings: [] as EntryOptionItem[],
+    hasError: false,
+  },
+  entries: {
+    scoops: new Map<string, number>(),
+    toppings: new Map<string, number>(),
+  },
+};
 
 const reducer = (state: EntryPageState, action: EntryPageActions) => {
   switch (action.type) {
