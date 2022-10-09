@@ -1,10 +1,10 @@
 import { render, screen } from "@testing-library/react";
-import { Options } from "../Options";
 import userEvent from "@testing-library/user-event";
+import { EntryPage } from "../EntryPage";
 
 test("update scoop subtotal when scoops changes", async () => {
   const user = userEvent.setup();
-  render(<Options optionType="scoops" />);
+  render(<EntryPage />);
   expect(screen.getByText(/Scoops total: \$/i)).toHaveTextContent(/0\.00/);
 
   // get the FIRST spin button

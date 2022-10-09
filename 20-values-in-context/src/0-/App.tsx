@@ -1,5 +1,5 @@
 import "./App.css";
-import { OrderEntry } from "./pages/entry/OrderEntry";
+import { EntryPage } from "./pages/entry/EntryPage";
 import { SummaryForm } from "./pages/summary/SummaryForm";
 
 // Go to pages/entry/test/OrderEntry.test.tsx to see how to mock errors
@@ -7,8 +7,7 @@ import { SummaryForm } from "./pages/summary/SummaryForm";
 function App() {
   return (
     <div className="App">
-      <h1>Design Your Sundae!</h1>
-      <OrderEntry />
+      <EntryPage />
       {/* <SummaryForm /> */}
     </div>
   );

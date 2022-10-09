@@ -1,4 +1,4 @@
-export type ItemType = {
+export type EntryOptionItem = {
   name: string;
   imagePath: string;
 };
